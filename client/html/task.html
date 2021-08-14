@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../javascript/index.js"></script>
+    <title>Task</title>
+  </head>
+  <body>
+    <div class="body-container">
+      <div class="loader hidden">
+        <img src="../images/loader.gif" alt="Loading...">
+      </div>
+      <todo-header></todo-header>
+      <div class="utilities">
+        <input
+          type="text"
+          class="task-utils task-search"
+          placeholder="Search.."
+        />
+        <select class="task-utils task-status-drp">
+          <option>No options found!</option>
+        </select>
+        <i
+          class="fas fa-plus-circle fa-2x task-add-btn"
+          onclick="document.querySelector('.add-task-modal').style.display='block'"
+          title="Add Task"
+        ></i>
+      </div>
+      <div class="task-main-content">
+        <table id="task-table">
+          <thead>
+            <tr>
+              <th>Task Id</th>
+              <th>Task Name</th>
+              <th>Task Status</th>
+              <th>Created By</th>
+              <th>Created On</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="task-table-body">
+            <tr>
+              <td colspan="6">Great No tasks are found!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="add-task-modal">
+        <form class="modal-content animate" id="add-task-modal">
+          <span
+            onclick="document.querySelector('.add-task-modal').style.display='none'"
+            class="close-add-task-modal"
+            title="Close"
+            >&times;</span
+          >
+          <div class="container">
+            <label for="taskName" class="field-label"><b>Task Name</b></label>
+            <input
+              type="text"
+              name="taskName"
+              placeholder="Enter task"
+              class="input-fields"
+              required
+            />
+            <div style="display: flex">
+              <button
+                type="submit"
+                class="modal-add-task-btns"
+                style="margin-left: 40%"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                class="modal-add-task-btns modal-add-task-cancel-btn"
+                onclick="document.querySelector('.add-task-modal').style.display='none'"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="edit-task-modal">
+        <form class="modal-content animate" id="edit-task-modal">
+          <span
+            onclick="document.querySelector('.edit-task-modal').style.display='none'"
+            class="close-edit-task-modal"
+            title="Close"
+            >&times;</span
+          >
+          <div class="container">
+            <label for="taskId" class="field-label"><b>Task Id</b></label>
+            <input type="text" name="taskId" class="input-fields" disabled />
+            <label for="taskName" class="field-label"><b>Task Name</b></label>
+            <input
+              type="text"
+              name="taskName"
+              placeholder="Enter task"
+              class="input-fields"
+              required
+            />
+            <label for="taskStatus" class="field-label"
+              ><b>Task Status</b></label
+            >
+            <select name="taskStatus" class="input-fields">
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+            <label for="username" class="field-label"><b>Username</b></label>
+            <input type="text" name="username" class="input-fields" disabled />
+            <div style="display: flex">
+              <button
+                type="submit"
+                class="modal-edit-task-btns"
+                style="margin-left: 40%"
+              >
+                Update
+              </button>
+              <button
+                type="button"
+                class="modal-edit-task-btns modal-edit-task-cancel-btn"
+                onclick="document.querySelector('.edit-task-modal').style.display='none'"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <todo-footer></todo-footer>
+    </div>
+  </body>
+</html>

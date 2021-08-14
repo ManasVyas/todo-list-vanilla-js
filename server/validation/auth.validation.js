@@ -16,6 +16,7 @@ const updateUserSchema = yup.object().shape({
   username: yup.string().required(),
   password: yup.string().required(),
   role: yup.string().required(),
+  executedBy: yup.number().required()
 })
 
 const validateUser = async (schema, body) => {

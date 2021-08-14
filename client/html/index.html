@@ -4,18 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/client/css/style.css" />
-    <script src="/client/javascript/index.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../javascript/index.js"></script>
     <title>Todo list</title>
   </head>
   <body>
-    <div class="header">
-      <nav>
-        <a href="#">Tasks</a>
-        <a href="#">Admin</a>
-        <a href="#">Sign Up</a>
-        <a href="#">Log In</a>
-      </nav>
+    <div class="body-container">
+      <div class="loader hidden">
+        <img src="../images/loader.gif" alt="Loading..." />
+      </div>
+      <todo-header></todo-header>
+      <div class="main-content">
+        <div class="left-content">
+          <ul>
+            <li>Planner</li>
+            <li>Reminder</li>
+            <li>Goal Setting</li>
+          </ul>
+          <button class="button"><a href="task.html">Create task</a></button>
+        </div>
+        <div class="right-content">
+          <img src="../images/todo-home.jpg" alt="home image" />
+        </div>
+      </div>
+      <todo-footer></todo-footer>
     </div>
   </body>
 </html>

@@ -103,9 +103,9 @@ const updateUser = async (req, res, next) => {
       const currentTime = new Date().toISOString();
       const updatedUser = await pool.query(
         `WITH updated AS (
-          UPDATE "user" SET username = $1, password = $2, salt = $3, role = $4, profile_picture = $5, updated_on = $6 WHERE user_id = $7 RETURNING *
+          UPDATE "user" SET username = $1, password = $2, salt = $3, role = $4, profile_picture = $5, updated_on = $6, executed_by = $7 WHERE user_id = $8 RETURNING *
         )
-        SELECT DISTINCT ON (u.user_id) u.user_id AS "userId", u.username AS "username", u.role AS "role" , u.profile_picture AS "profilePicture", u.created_on AS "createdOn", u.updated_on AS "updatedOn", CASE WHEN (SELECT array_to_json(array_agg(task_alias)) FROM (SELECT * FROM task) task_alias WHERE task_alias.user_id = u.user_id) IS NULL THEN '[]' ELSE (SELECT array_to_json(array_agg(task_alias)) FROM (SELECT task_id AS "taskId", task_name AS "taskName", task_status_id AS "taskStatusId", created_on AS "createdOn", updated_on AS "updatedOn", user_id FROM task) task_alias WHERE task_alias.user_id = u.user_id) END AS "tasks" FROM updated AS "u" LEFT JOIN task AS "t" ON u.user_id = t.user_id WHERE u.user_id = $7 ORDER BY u.user_id DESC`,
+        SELECT DISTINCT ON (u.user_id) u.user_id AS "userId", u.username AS "username", u.role AS "role" , u.profile_picture AS "profilePicture", u.created_on AS "createdOn", u.updated_on AS "updatedOn", CASE WHEN (SELECT array_to_json(array_agg(task_alias)) FROM (SELECT * FROM task) task_alias WHERE task_alias.user_id = u.user_id) IS NULL THEN '[]' ELSE (SELECT array_to_json(array_agg(task_alias)) FROM (SELECT task_id AS "taskId", task_name AS "taskName", task_status_id AS "taskStatusId", created_on AS "createdOn", updated_on AS "updatedOn", user_id FROM task) task_alias WHERE task_alias.user_id = u.user_id) END AS "tasks" FROM updated AS "u" LEFT JOIN task AS "t" ON u.user_id = t.user_id WHERE u.user_id = $8 ORDER BY u.user_id DESC`,
         [
           validatedBody.username,
           pw,
@@ -113,6 +113,7 @@ const updateUser = async (req, res, next) => {
           validatedBody.role,
           req.file.path,
           currentTime,
+          validatedBody.executedBy,
           validatedBody.userId,
         ]
       );
@@ -125,20 +126,24 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
+    const { userId, executedById } = req.body;
     const data = await pool.query(`SELECT * FROM "user" WHERE user_id = $1`, [
-      req.params.id,
+      userId,
     ]);
     if (data.rows.length === 0) {
       const error = new Error("User not found!");
       error.status = 404;
       return next(error);
     }
+    
+    await pool.query(`INSERT INTO user_audit (table_name, operation, user_id, performed_by, performed_date) VALUES ('USER', 'DELETE', $1, $2, NOW())`, [userId ,executedById])
+
     const user = await pool.query(
       `WITH deleted AS (
         DELETE FROM "user" WHERE user_id = $1 RETURNING *
       )
       SELECT DISTINCT ON (u.user_id) u.user_id AS "userId", u.username AS "username", u.role AS "role" , u.profile_picture AS "profilePicture", u.created_on AS "createdOn", u.updated_on AS "updatedOn", CASE WHEN (SELECT array_to_json(array_agg(task_alias)) FROM (SELECT * FROM task) task_alias WHERE task_alias.user_id = u.user_id) IS NULL THEN '[]' ELSE (SELECT array_to_json(array_agg(task_alias)) FROM (SELECT task_id AS "taskId", task_name AS "taskName", task_status_id AS "taskStatusId", created_on AS "createdOn", updated_on AS "updatedOn", user_id FROM task) task_alias WHERE task_alias.user_id = u.user_id) END AS "tasks" FROM deleted AS "u" LEFT JOIN task AS "t" ON u.user_id = t.user_id WHERE u.user_id = $1 ORDER BY u.user_id DESC`,
-      [req.params.id]
+      [userId]
     );
     res.status(200).json({ status: "success", data: user.rows });
   } catch (error) {
@@ -150,11 +155,21 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+const getUserAudit = async (req, res, next) => {
+  try {
+    const data = await pool.query(`SELECT user_audit_id AS "userAuditId", table_name AS "tableName", operation, user_id AS "userId", performed_by AS "performedBy", performed_date AS "performedDate" FROM user_audit ORDER BY user_audit_id DESC`)
+    res.status(200).json({ status: "success", data: data.rows });
+  } catch (error) {
+    next(error)
+  }
+}
+
 const userController = {
   getAllUsers,
   getUserById,
   updateUser,
   deleteUser,
+  getUserAudit
 };
 
 module.exports = userController;

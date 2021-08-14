@@ -1,3 +1,541 @@
+/* background=121212
+  menubar=181818
+  top-gradient=404040
+  bottom-gradient=282828
+  primary-text=FFFFFF
+  secondary-text=B3B3B3 */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
 body {
+  height: 100%;
+  background-color: #282828;
+}
+
+.body-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.body-container todo-header {
+  flex: 0 1 auto;
+}
+
+.body-container .main-content {
+  flex: 1 1 auto;
+  overflow-y: hidden;
+}
+
+.body-container .task-main-content {
+  flex: 1 1 auto;
+  overflow-y: hidden;
+}
+
+.body-container .admin-parent-tab {
+  flex: 1 1 auto;
+  overflow-y: hidden;
+}
+
+.body-container .login-body {
+  flex: 1 1 auto;
+  overflow-y: hidden;
+}
+
+.body-container .signup-body {
+  flex: 1 1 auto;
+  overflow-y: hidden;
+}
+
+/* .body-container table{
+  flex: 1 1 auto;
+  overflow-y: auto;
+} */
+
+.body-container todo-footer {
+  flex: 0 1 auto;
+}
+
+/* NavBar */
+header {
+  background: #000;
+  width: 98%;
+  margin: auto;
+  border-radius: 0 0 20px 20px;
+}
+
+header ul {
+  display: flex;
+  align-items: center;
+}
+
+header a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+}
+
+header li {
+  color: #fff;
+  list-style: none;
+  margin-right: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+header li.nav-list-item:hover {
+  background: #181818;
+}
+
+header li.nav-list-item.right-aligned {
+  margin-left: auto;
+  text-align: right;
+}
+
+.profile-logo {
+  height: 70px;
+  width: 70px;
+  max-height: 100px;
+  max-width: 100px;
+  border-radius: 50%;
+}
+
+/* Main content */
+.main-content {
+  display: flex;
+  align-items: center;
+  padding-left: 10%;
+  width: 98%;
+  margin: 2.8% auto;
+}
+
+.main-content li {
+  list-style: none;
+}
+
+.left-content {
+  flex: 1;
+}
+
+.left-content li {
+  font-size: 2.5em;
+  color: #fff;
+}
+
+.right-content {
+  flex: 2;
+}
+
+.right-content img {
+  width: 85%;
+}
+
+.button {
+  background-color: #181818;
+  border: none;
+  padding: 16px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 1em;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.button a {
+  text-decoration: none;
+  color: #b3b3b3;
+}
+
+.button:hover {
+  background-color: #555555;
+}
+
+/* Footer */
+footer {
+  background: #000;
+  color: #fff;
+  width: 98%;
+  margin: 0 1%;
+  height: 42px;
+  border-radius: 20px 20px 0 0;
+}
+
+footer ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+footer li {
+  padding-top: 1%;
+  list-style: none;
+}
+
+.signup-footer {
+  position: relative;
+}
+
+/* task.html */
+
+.utilities {
+  justify-content: space-between;
+  display: flex;
+}
+
+.task-utils {
+  padding: 0.5% 1%;
+  margin: 1% 0 0 0;
+  border: 1px solid #ccc;
+}
+
+.task-search {
+  width: 15%;
+  margin-left: 3%;
+}
+
+.task-status-drp {
+  margin-right: 4%;
+  width: 15%;
+}
+
+.task-add-btn {
+  cursor: pointer;
+  margin: 1% 2.5% 0 0;
+}
+
+#task-table,
+#audit-task-table,
+#admin-user-task-table,
+#audit-user-table {
+  border-collapse: collapse;
+  width: 98%;
+  margin: 1% auto;
+  color: #fff;
+  overflow: auto;
+}
+
+#task-table thead,
+#task-table tbody,
+#admin-user-task-table thead,
+#admin-user-task-table tbody,
+#audit-task-table thead,
+#audit-task-table tbody,
+#audit-user-table thead,
+#audit-user-table tbody {
+  border: 1px solid #b3b3b3;
+  text-align: center;
+}
+
+#task-table tbody,
+#admin-user-task-table tbody,
+#audit-task-table tbody,
+#audit-user-table tbody {
+  display: block;
+  height: 328px;
+  overflow: auto;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#task-table th,
+#task-table td,
+#admin-user-task-table th,
+#admin-user-task-table td,
+#audit-task-table th,
+#audit-task-table td,
+#audit-user-table th,
+#audit-user-table td {
+  padding: 1%;
+}
+
+#task-table tr:nth-child(even),
+#admin-user-task-table tr:nth-child(even),
+#audit-task-table tr:nth-child(even),
+#audit-user-table tr:nth-child(even) {
+  background-color: #555555;
+}
+
+.task-buttons {
+  cursor: pointer;
+}
+
+.fa-edit,
+.fa-trash {
+  margin-left: 5%;
+  cursor: pointer;
+}
+
+.modal-add-task-btns,
+.modal-edit-task-btns,
+.admin-user-update-modal-btns {
+  display: block;
+  background-color: #181818;
+  color: #fff;
+  padding: 1% 1.5%;
+  margin: 0.5% 1%;
+  border: none;
+  cursor: pointer;
+  width: 10%;
+}
+
+.modal-add-task-btns:hover,
+.modal-edit-task-btns:hover,
+.admin-user-update-modal-btns:hover {
+  opacity: 0.8;
+}
+
+.modal-add-task-cancel-btn,
+.modal-edit-task-cancel-btn,
+.admin-user-update-modal-cancel-btn {
+  background-color: #ff2e2e;
+}
+
+.add-task-modal,
+.edit-task-modal,
+.admin-user-modal,
+.admin-user-update-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding-top: 4%;
+}
+
+.modal-content {
+  background-color: #404040;
+  margin: 0 auto 15% auto;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close-add-task-modal,
+.close-edit-task-modal,
+.close-admin-user-modal,
+.close-admin-user-update-modal {
+  margin-left: 97%;
+  color: #fff;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close-add-task-modal:hover,
+.close-edit-task-modal:hover,
+.close-admin-user-modal:hover,
+.close-admin-user-update-modal:hover,
+.close-add-task-modal.focus,
+.close-edit-task-modal.focus,
+.close-admin-user-modal.focus,
+.close-admin-user-update-modal.focus {
+  color: #ff2e2e;
+  cursor: pointer;
+}
+
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* admin.html */
+
+.tablink {
+  background-color: #555;
+  color: #fff;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 0.5% 0;
+  padding: 1% 1.5%;
+  font-size: 17px;
+  width: 32.7%;
+}
+
+.admin-parent-tab .tablink:nth-child(1) {
+  margin-left: 1%;
+  border-radius: 20px 0 0 20px;
+}
+
+.admin-parent-tab .tablink:nth-child(3) {
+  border-radius: 0 20px 20px 0;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+.tab-content {
+  text-align: center;
+  color: #fff;
+  display: none;
+  padding: 0.5% 0.5%;
+  margin: 4.5% 0 1% 1%;
+  width: 98%;
+  height: 78.5%;
+  border: 1px solid #888;
+  border-radius: 20px;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
+.user-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: 83%;
+  width: 24%;
+  padding: 0.5% 0.5%;
+  margin: 0.5% 0.5%;
+}
+
+.user-card img {
+  text-align: center;
+  max-width: 100%;
+  height: 200px;
+}
+
+.role {
+  color: #b3b3b3;
+  font-size: 18px;
+}
+
+.user-tasks-btn {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  margin: 0.5%;
+  padding: 2%;
+  color: #fff;
   background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 50%;
+  font-size: 18px;
+}
+
+.user-tasks-btn:hover {
+  opacity: 0.7;
+}
+
+.user-admin-card-btns {
+  margin: 0 1.5%;
+}
+
+/* signUp.html */
+
+.body-container .signup-body {
+  overflow: auto;
+}
+
+/* login.html */
+
+.login-body {
+  width: 98%;
+  margin: auto;
+  color: #fff;
+}
+
+.img-container {
+  text-align: center;
+  margin: 1% 0;
+}
+
+img.avatar {
+  height: 220px;
+  width: 220px;
+  max-height: 290px;
+  max-width: 290px;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 1%;
+  text-align: center;
+}
+
+.field-label {
+  color: #fff;
+  display: block;
+  text-align: left;
+  margin-left: 25%;
+}
+
+.input-fields {
+  width: 50%;
+  padding: 1% 2%;
+  margin: 1%;
+  border: 1px solid #ccc;
+  color: #000;
+}
+
+.login-btn {
+  background-color: #181818;
+  color: #b3b3b3;
+  padding: 1% 2%;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+}
+
+.login-btn:hover {
+  opacity: 0.8;
+}
+
+/* Loader */
+
+.loader {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #282828;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader.hidden {
+  animation: fadeOut 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
