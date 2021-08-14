@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../javascript/index.js"></script>
+    <title>Admin</title>
+  </head>
+  <body>
+    <div class="body-container">
+      <div class="loader hidden">
+        <img src="../images/loader.gif" alt="Loading...">
+      </div>
+      <todo-header></todo-header>
+      <div class="admin-parent-tab">
+        <button class="tablink" id="defaultOpen">Users</button>
+        <button class="tablink">User Audit</button>
+        <button class="tablink">Task Audit</button>
+        <div id="admin-user" class="tab-content">
+          <h3 style="margin-left: 45%;">No users found!</h3>
+        </div>
+        <div id="admin-user-audit" class="tab-content">
+          <table id="audit-user-table">
+            <thead>
+              <tr>
+                <th>User Audit Id</th>
+                <th>Table Name</th>
+                <th>Operation</th>
+                <th>User Id</th>
+                <th>Performed By</th>
+                <th>Performed At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="6">No Audit Record Found!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="admin-task-audit" class="tab-content">
+          <table id="audit-task-table">
+            <thead>
+              <tr>
+                <th>Task Audit Id</th>
+                <th>Table Name</th>
+                <th>Operation</th>
+                <th>Task Id</th>
+                <th>Performed By</th>
+                <th>Performed At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="6">No Audit Record Found!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="admin-user-modal">
+          <span
+            onclick="document.querySelector('.admin-user-modal').style.display='none'"
+            class="close-admin-user-modal"
+            title="Close"
+            >&times;</span
+          >
+          <table id="admin-user-task-table">
+            <thead>
+              <tr>
+                <th>Task Id</th>
+                <th>Task Name</th>
+                <th>Task Status</th>
+                <th>Created By</th>
+                <th>Created On</th>
+              </tr>
+            </thead>
+            <tbody id="admin-user-task-table-body">
+              <tr>
+                <td colspan="6">Great No tasks are found!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="admin-user-update-modal">
+          <div class="container">
+            <form class="modal-content animate" id="update-user-modal">
+              <span
+                onclick="document.querySelector('.admin-user-update-modal').style.display='none'"
+                class="close-admin-user-update-modal"
+                title="Close"
+                >&times;</span
+              >
+              <label for="userId" class="field-label"><b>User Id</b></label>
+              <input
+                type="text"
+                name="userId"
+                class="input-fields"
+                disabled
+              />
+              <label for="username" class="field-label"><b>Username</b></label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                class="input-fields"
+                required
+              />
+              <label for="password" class="field-label"><b>Password</b></label>
+              <input
+                type="password"
+                name="password"
+                autocomplete="on"
+                placeholder="Password"
+                class="input-fields"
+                required
+              />
+              <label for="role" class="field-label"><b>Role</b></label>
+              <select name="role" class="input-fields" required>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+              <label for="profilePicture" class="field-label"><b>Select profile picture</b></label>
+              <input type="file" class="input-fields" name="profilePicture" required/>
+              <div style="display: flex">
+                <button
+                  type="submit"
+                  class="admin-user-update-modal-btns"
+                  style="margin-left: 40%"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  class="admin-user-update-modal-btns admin-user-update-modal-cancel-btn"
+                  onclick="document.querySelector('.admin-user-update-modal').style.display='none'"
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
+        </div>
+      </div>
+      <todo-footer></todo-footer>
+    </div>
+  </body>
+</html>

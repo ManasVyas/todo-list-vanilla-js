@@ -49,20 +49,22 @@ const registerUser = (req, res, next) => {
       const salt = saltHash.salt;
       const hash = saltHash.hash;
       const currentTime = new Date().toISOString();
+      const maxUserId = await pool.query(`SELECT MAX(user_id) FROM "user"`);
       const user = await pool.query(
-        `INSERT INTO "user" (username, password, salt, role, profile_picture, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING user_id AS "userId", username, password, salt, role, profile_picture AS "profilePicture", created_on AS "createdOn", updated_on AS "updatedOn"`,
+        `INSERT INTO "user" (username, password, salt, role, profile_picture, executed_by, created_on, updated_on) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING user_id AS "userId", username, password, salt, role, profile_picture AS "profilePicture", created_on AS "createdOn", updated_on AS "updatedOn"`,
         [
           validatedBody.username,
           hash,
           salt,
           validatedBody.role,
           req.file.path,
+          maxUserId.rows[0].max + 1,
           currentTime,
           currentTime,
         ]
       );
       if (user.rows.length > 0) {
-        const jwt = passportUtils.issueJWT(user.rows);
+        const jwt = passportUtils.issueJWT(user.rows[0]);
         delete user.rows[0].password;
         delete user.rows[0].salt;
         res.json({

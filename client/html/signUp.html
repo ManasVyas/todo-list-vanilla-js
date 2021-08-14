@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../javascript/index.js"></script>
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <div class="body-container">
+      <div class="loader hidden">
+        <img src="../images/loader.gif" alt="Loading..." />
+      </div>
+      <todo-header></todo-header>
+      <div class="signup-body">
+        <form id="signup-form">
+          <div class="img-container">
+            <img
+              src="../images/auth_form.jpg"
+              alt="auth_image"
+              class="avatar"
+            />
+          </div>
+          <div class="container">
+            <label for="username" class="field-label"><b>Username</b></label>
+            <input
+              type="text"
+              placeholder="Enter username.."
+              name="username"
+              class="input-fields"
+              required
+            />
+            <label for="password" class="field-label"><b>Password</b></label>
+            <input
+              type="password"
+              autocomplete="on"
+              placeholder="Enter Password"
+              name="password"
+              class="input-fields"
+              required
+            />
+            <label for="role" class="field-label"><b>Select role</b></label>
+            <select id="role" name="role" class="input-fields">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            <label for="profilePicture" class="field-label"
+              ><b>Select profile picture</b></label
+            >
+            <input type="file" class="input-fields" name="profilePicture" />
+            <button type="submit" class="login-btn">Sign up</button>
+          </div>
+        </form>
+      </div>
+      <todo-footer></todo-footer>
+    </div>
+  </body>
+</html>
